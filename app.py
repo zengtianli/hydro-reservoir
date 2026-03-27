@@ -21,11 +21,12 @@ import tempfile
 from pathlib import Path
 from datetime import datetime
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 添加 src 和 lib 到路径
 from src.reservoir import xlsx_bridge
 from src.reservoir.hydro_core import HydroElectricity, read_info_txt, read_paras
 from src.common.st_utils import page_config, footer
