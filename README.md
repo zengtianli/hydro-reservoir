@@ -1,14 +1,14 @@
-        # hydro-reservoir
+# hydro-reservoir
 
-        **English** | [中文](README_CN.md)
+**English** | [中文](README_CN.md)
 
-        Cascade reservoir hydropower scheduling optimizer with interactive Plotly charts.
+Cascade reservoir hydropower scheduling optimizer with interactive Plotly charts.
 
-        [![Live Demo](https://img.shields.io/badge/Live_Demo-hydro--reservoir.tianlizeng.cloud-blue?style=for-the-badge)](https://hydro-reservoir.tianlizeng.cloud)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-hydro--reservoir.tianlizeng.cloud-blue?style=for-the-badge)](https://hydro-reservoir.tianlizeng.cloud)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-yellow?style=for-the-badge)](https://python.org)
-        [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-        ---
+---
 
 ### Try it now — no install needed
 
@@ -18,33 +18,33 @@
 
 ![hydro-reservoir demo](docs/screenshots/demo.png)
 
-        ---
+---
 
-        ## What can hydro-reservoir do?
+## What can hydro-reservoir do?
 
-        | Feature | Description |
-        |---------|-------------|
-        | **Cascade scheduling** | Joint optimization across multiple reservoirs in series |
+| Feature | Description |
+|---------|-------------|
+| **Cascade scheduling** | Joint optimization across multiple reservoirs in series |
 | **Flexible time step** | Daily, 10-day, or monthly calculation intervals |
 | **Interactive charts** | Plotly visualizations of water levels, flow, and power output |
 | **Parameter preview** | Inspect reservoir parameters before running optimization |
 | **Excel I/O** | Upload input workbooks and download scheduling results |
 
-        ## Install
+## Install
 
-        ```bash
-        git clone https://github.com/zengtianli/hydro-reservoir.git
+```bash
+git clone https://github.com/zengtianli/hydro-reservoir.git
 cd hydro-reservoir
 pip install -r requirements.txt
-        ```
+```
 
-        ## Quick Start
+## Quick Start
 
-        ```bash
-        streamlit run app.py
-        ```
+```bash
+streamlit run app.py
+```
 
-        ## Self-host
+## Self-host
 
 ```bash
 git clone https://github.com/zengtianli/hydro-reservoir.git
@@ -57,9 +57,9 @@ Or use the hosted version: **https://hydro-reservoir.tianlizeng.cloud**
 
 ## Requirements
 
-        - Python 3.9+
-        - Streamlit 1.36+
+- Python 3.9+
+- Streamlit 1.36+
 
-        ## License
+## License
 
-        MIT
+MIT
