@@ -18,7 +18,7 @@
 
 ---
 
-![hydro-reservoir demo](docs/screenshots/demo.svg)
+![hydro-reservoir demo](docs/screenshots/demo.png)
 
         ---
 
