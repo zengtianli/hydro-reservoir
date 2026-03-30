@@ -1,24 +1,52 @@
-# ⚡ Hydro Reservoir — Reservoir Scheduling
+        # hydro-reservoir
 
-[![GitHub stars](https://img.shields.io/github/stars/zengtianli/hydro-reservoir)](https://github.com/zengtianli/hydro-reservoir)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.36+-FF4B4B.svg)](https://streamlit.io)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-hydro--reservoir.tianlizeng.cloud-brightgreen)](https://hydro-reservoir.tianlizeng.cloud)
+        **English** | [中文](README_CN.md)
 
-Cascade reservoir hydropower scheduling optimizer with interactive Plotly charts.
+        Cascade reservoir hydropower scheduling optimizer with interactive Plotly charts.
 
-![screenshot](docs/screenshot.png)
+        [![Live Demo](https://img.shields.io/badge/Live_Demo-hydro--reservoir.tianlizeng.cloud-blue?style=for-the-badge)](https://hydro-reservoir.tianlizeng.cloud)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-yellow?style=for-the-badge)](https://python.org)
+        [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-## Features
+        ---
 
-- **Cascade scheduling** — joint optimization of multiple reservoirs in series
-- **Flexible time step** — daily, 10-day, or monthly calculation intervals
-- **Interactive charts** — Plotly-based visualization of water levels, flow, and power output
-- **Parameter preview** — inspect reservoir parameters, inflow series, and dispatch curves before computing
-- **Excel I/O** — upload input workbook, download detailed scheduling results
+        ---
 
-## Quick Start
+### Try it now — no install needed
+
+**https://hydro-reservoir.tianlizeng.cloud**
+
+---
+
+![hydro-reservoir demo](docs/screenshots/demo.svg)
+
+        ---
+
+        ## What can hydro-reservoir do?
+
+        | Feature | Description |
+        |---------|-------------|
+        | **Cascade scheduling** | Joint optimization across multiple reservoirs in series |
+| **Flexible time step** | Daily, 10-day, or monthly calculation intervals |
+| **Interactive charts** | Plotly visualizations of water levels, flow, and power output |
+| **Parameter preview** | Inspect reservoir parameters before running optimization |
+| **Excel I/O** | Upload input workbooks and download scheduling results |
+
+        ## Install
+
+        ```bash
+        git clone https://github.com/zengtianli/hydro-reservoir.git
+cd hydro-reservoir
+pip install -r requirements.txt
+        ```
+
+        ## Quick Start
+
+        ```bash
+        streamlit run app.py
+        ```
+
+        ## Self-host
 
 ```bash
 git clone https://github.com/zengtianli/hydro-reservoir.git
@@ -27,19 +55,13 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy (VPS)
+Or use the hosted version: **https://hydro-reservoir.tianlizeng.cloud**
 
-```bash
-git clone https://github.com/zengtianli/hydro-reservoir.git
-cd hydro-reservoir
-pip install -r requirements.txt
-nohup streamlit run app.py --server.port 8502 --server.headless true &
-```
+## Requirements
 
-## Hydro Toolkit Plugin
+        - Python 3.9+
+        - Streamlit 1.36+
 
-This project is a plugin for [Hydro Toolkit](https://github.com/zengtianli/hydro-toolkit) and can also run standalone. Install it in the Toolkit by pasting this repo URL in the Plugin Manager. You can also **[try it online](https://hydro-reservoir.tianlizeng.cloud)** — no install needed.
+        ## License
 
-## License
-
-MIT
+        MIT
