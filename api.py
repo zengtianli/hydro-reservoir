@@ -7,18 +7,28 @@ from __future__ import annotations
 
 import base64
 import io
-import json
 import os
 import sys
 import tempfile
 import time
 from pathlib import Path
-from urllib.parse import quote
 
 import pandas as pd
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
+
+# --- shared helpers (see ~/Dev/devtools/lib/hydro_api_helpers.py) ---
+for _p in [Path.home() / "Dev/devtools/lib", Path("/var/www/devtools/lib")]:
+    if _p.exists():
+        sys.path.insert(0, str(_p))
+        break
+from hydro_api_helpers import (  # noqa: E402
+    build_json_response,
+    cjk_header_safe,
+    cors_origins,
+    df_to_json_safe,
+)
 
 # Project root on sys.path so `from src.reservoir import ...` resolves
 # exactly like the original Streamlit entrypoint does.
@@ -33,11 +43,7 @@ app = FastAPI(title="hydro-reservoir-api", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3112",
-        "http://127.0.0.1:3112",
-        "https://hydro-reservoir.tianlizeng.cloud",
-    ],
+    allow_origins=cors_origins("hydro-reservoir", 3112),
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -59,14 +65,6 @@ def meta_info() -> dict:
     }
 
 
-def _df_to_json_safe(df: pd.DataFrame, limit: int | None = None) -> dict:
-    """DataFrame → {columns, rows, totalRows}. Handles NaN / datetime / numpy."""
-    total = len(df)
-    sliced = df.head(limit) if limit is not None and total > limit else df
-    parsed = json.loads(sliced.to_json(orient="split", date_format="iso", force_ascii=False))
-    return {"columns": parsed["columns"], "rows": parsed["data"], "totalRows": total}
-
-
 def _parse_input_preview(xlsx_bytes: bytes) -> dict:
     """Reproduce app.py's `parse_uploaded_xlsx` for Step 2 preview (no compute)."""
     xlsx = pd.ExcelFile(io.BytesIO(xlsx_bytes))
@@ -85,12 +83,12 @@ def _parse_input_preview(xlsx_bytes: bytes) -> dict:
             elif name == "下库":
                 down_res_name = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else None
         # Full params table w/ header
-        paras = _df_to_json_safe(df_params.fillna(""))
+        paras = df_to_json_safe(df_params.fillna(""))
 
     if "上游_水库信息" in xlsx.sheet_names:
-        up_res_info = _df_to_json_safe(pd.read_excel(xlsx, sheet_name="上游_水库信息").fillna(""))
+        up_res_info = df_to_json_safe(pd.read_excel(xlsx, sheet_name="上游_水库信息").fillna(""))
     if "下游_水库信息" in xlsx.sheet_names:
-        down_res_info = _df_to_json_safe(pd.read_excel(xlsx, sheet_name="下游_水库信息").fillna(""))
+        down_res_info = df_to_json_safe(pd.read_excel(xlsx, sheet_name="下游_水库信息").fillna(""))
 
     return {
         "upResInfo": up_res_info,
@@ -278,7 +276,7 @@ def _run_reservoir_full(xlsx_bytes: bytes, calc_step: str) -> dict:
     results_payload: dict[str, dict] = {}
     for name, df in sheets.items():
         limit = DAILY_DISPLAY_LIMIT if "逐日" in name else None
-        results_payload[name] = _df_to_json_safe(df.fillna(""), limit=limit)
+        results_payload[name] = df_to_json_safe(df.fillna(""), limit=limit)
 
     up_daily = sheets.get("上游_逐日过程")
     down_daily = sheets.get("下游_逐日过程")
@@ -333,8 +331,8 @@ async def compute(
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={
             "Content-Disposition": 'attachment; filename="reservoir_result.xlsx"',
-            "X-Up-Res": quote(up_res),
-            "X-Down-Res": quote(down_res),
+            "X-Up-Res": cjk_header_safe(up_res),
+            "X-Down-Res": cjk_header_safe(down_res),
             "Access-Control-Expose-Headers": "X-Up-Res, X-Down-Res, Content-Disposition",
         },
     )
